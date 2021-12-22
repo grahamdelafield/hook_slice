@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="page-header">Record your latest round</h1>
+</div>
+<div class="container">
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputName2">First Name</label>
+              <input type="name" class="form-control" id="inputName2" name='first-name' placeholder="Watson">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputName4">Last Name</label>
+              <input type="name" class="form-control" id="inputName4" name="last-name" placeholder="Crick">
+            </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+              <label for="input-month">Month</label>
+              <select class="form-select" aria-label="Default select example" id="month-selector" name="month-selector">
+                <option selected>Choose...</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+          </div>
+        <div class="form-group col-md-4">
+            <label for="input-day">Day</label>
+            <select class="form-select" aria-label="Default select example" id="day-selector" name="day-selector">
+                <option selected>Choose...</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="input-year">Year</label>
+            <select class="form-select" aria-label="Default select example" id="year-selector" name="year-selector">
+              <option selected>Choose...</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
+          </select>
+      `</div>
+      </div>
+      <div class="contianer" id="shot-container">
+        <div class="form-group row" id="shot-counter-1" name="running-counter">
+            <label for="staticEmail" class="col-sm-1 col-form-label">Shot 1</label>
+                <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
+                        <option selected>Club</option>
+                        <option value="13">Driver</option>
+                        <option value="14">3 Wood</option>
+                        <option value="15">5 Wood</option>
+                        <option value="1">Hybrid</option>
+                        <option value="2">2 Iron</option>
+                        <option value="3">3 Iron</option>
+                        <option value="4">4 Iron</option>
+                        <option value="5">5 Iron</option>
+                        <option value="6">6 Iron</option>
+                        <option value="7">7 Iron</option>
+                        <option value="8">8 Iron</option>
+                        <option value="9">9 Iron</option>
+                        <option value="10">Pitching Wedge</option>
+                        <option value="11">Sand Wedge</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-direction" name="flight-path">
+                        <option selected>Left/Right</option>
+                        <option value="1">Left</option>
+                        <option value="2">Straight</option>
+                        <option value="3">Right</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-scale" name="shot-scale">
+                        <option selected>Scale</option>
+                        <option value="0">0</option>
+                        <option value="1">+1</option>
+                        <option value="2">+2</option>
+                        <option value="3">+3</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-misshit" name="shot-misshit">
+                        <option selected>Mishit?</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary float-right" onclick=submitData()>Submit</button>
+    </form>
+    <button type="add" class="btn btn-secondary" onclick=testAdd()>+Add Shot</button>
+</div>
+<div class="container" style="padding-top: 3rem;">
+</div>
+<template id="productrow">
+    <div class="form-group row" id="shot-counter-1" name="running-counter">
+    <label for="staticEmail" class="col-sm-1 col-form-label" id="shot-label">Shot 1</label>
+                <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
+                        <option selected>Club</option>
+                        <option value="13">Driver</option>
+                        <option value="14">3 Wood</option>
+                        <option value="15">5 Wood</option>
+                        <option value="1">Hybrid</option>
+                        <option value="2">2 Iron</option>
+                        <option value="3">3 Iron</option>
+                        <option value="4">4 Iron</option>
+                        <option value="5">5 Iron</option>
+                        <option value="6">6 Iron</option>
+                        <option value="7">7 Iron</option>
+                        <option value="8">8 Iron</option>
+                        <option value="9">9 Iron</option>
+                        <option value="10">Pitching Wedge</option>
+                        <option value="11">Sand Wedge</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-direction" name="flight-path">
+                        <option selected>Left/Right</option>
+                        <option value="1">Left</option>
+                        <option value="2">Straight</option>
+                        <option value="3">Right</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-scale" name="shot-scale">
+                        <option selected>Scale</option>
+                        <option value="0">0</option>
+                        <option value="1">+1</option>
+                        <option value="2">+2</option>
+                        <option value="3">+3</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" aria-label="Default select example" id="shot-mishit" name="shot-misshit">
+                        <option selected>Mishit?</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+  </template>
+
+{% endblock %}

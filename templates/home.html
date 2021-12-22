@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container" style="padding-top: 3rem;">
+    <div class="jumbotron">
+      <div class="flex">
+        <h1 class="jumbo-header">Welcome!</h1>
+          <p class="lead-text">
+            You are here because you want to avoid additional strokes...both medically and in your golf game.    
+          </p>
+          <p class="lead-text">
+            You can get started by tracking today's data or by looking at your progress over time.
+          </p>
+        <div class="container text-center", style="padding-top: 2rem; justify-content: space-between;">
+          <a class="btn btn-primary btn-lg" href="/track" role="button">Start Tracking</a>
+          <a class="btn btn-danger btn-lg" href="/analyze" role="button">Examine Progress</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
