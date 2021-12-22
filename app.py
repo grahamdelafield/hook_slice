@@ -63,5 +63,5 @@ def form_example():
 def my_print():
     print('HATE')
 
-if __name__=='__main__':
-    app.run(debug=True)
+# if __name__=='__main__':
+#     app.run(debug=True)
