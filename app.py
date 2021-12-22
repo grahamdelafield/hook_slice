@@ -3,8 +3,6 @@ from flask_bootstrap import Bootstrap
 import json
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
-Bootstrap(app)
 
 @app.route('/')
 def home():
