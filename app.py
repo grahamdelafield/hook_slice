@@ -1,7 +1,20 @@
 from flask import Flask, render_template, redirect, url_for, request
 import json
+import time
+import psycopg2
+
 
 app = Flask(__name__)
+POSTGRES_URI = 'postgres://mewzpjro:LmVUqseI178MBoRAAXmk_RiTXLu3Kwa7@castor.db.elephantsql.com/mewzpjro'
+
+connection = psycopg2.connect(POSTGRES_URI)
+with connection:
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute("CREATE TABLE data (name TEXT, date TEXT, club TEXT, flight_path TEXT, scale TEXT, misshit TEXT)")
+        except:
+            print('TABLE data has already been constructed. Moving on...')
+            pass
 
 @app.route('/')
 def home():
@@ -18,15 +31,15 @@ def track():
     if request.method == 'POST':
         if not request.form.get('first-name') == '' and not request.form.get('last-name') == '':
             if request.form.get('month-selector') != 'Choose...' and request.form.get('day-selector') != 'Choose...' and request.form.get('year-selector') != 'Choose...':
-                
-                with open('data/data.json', 'a') as f:
-                    d = {
-                        request.form.get('first-name') + ' ' + request.form.get('last-name'):{
-                            request.form.get('year-selector') + '-' + request.form.get('month-selector') + '-' + request.form.get('month-selector'):request.form
-                        }
-                    }
-                    f.write(json.dumps(d))
-                return ('', 204)
+
+                resp = handle_data(request.form)
+
+                with connection:
+                    with connection.cursor() as cursor:
+                        for r in resp:
+                            cursor.execute("INSERT INTO data VALUES (%s, %s, %s, %s, %s, %s);", r)
+                time.sleep(1)
+                return render_template('success.html')
             else:
                 return ('', 204)
 
@@ -44,6 +57,72 @@ def form_example():
     # handle the POST request
     return render_template('analyze.html')
 
+def handle_data(form):
+    print('here')
+    first_name = form.get('first-name')
+    last_name = form.get('last-name')
 
-# if __name__=='__main__':
-#     app.run(debug=True)
+    year = request.form.get('year-selector')
+    month = request.form.get('month-selector')
+    day = request.form.get('day-selector')
+
+    clubs = [v for (k, v) in form.items() if k.startswith('club')]
+    clubs = map_values(clubs, 'clubs')
+
+    paths = [v for (k, v) in form.items() if k.startswith('flight')]
+    paths = map_values(paths, 'paths')
+
+    scales = [v for (k, v) in form.items() if k.startswith('shot-scale')]
+    scales = map_values(scales, 'scales')
+    
+    misses = [v for (k, v) in form.items() if k.startswith('shot-mis')]
+    misses = map_values(misses, 'misses')
+
+    user_name = [first_name + ' ' + last_name]*len(clubs)
+    date = [year + '-' + month + '-' + day]*len(clubs)
+
+    return zip(user_name, date, clubs, paths, scales, misses)
+
+def map_values(vals, kind):
+
+    if kind == 'clubs':
+        lookup = {
+            "13":"Driver",
+            "14":"3 Wood",
+            "15":"5 Wood",
+            "1":"Hybrid",
+            "2":"2 Iron",
+            "3":"3 Iron",
+            "4":"4 Iron",
+            "5":"5 Iron",
+            "6":"6 Iron",
+            "7":"7 Iron",
+            "8":"8 Iron",
+            "9":"9 Iron",
+            "10":"Pitching Wedge",
+            "11":"Sand Wedge"
+        }
+
+    elif kind == 'paths':
+        lookup = {
+            '1':'Left',
+            '2':'Straight',
+            '3':'Right'
+        }
+    
+    elif kind == 'scales':
+        lookup = {
+            '0':'0',
+            '1':'1',
+            '2':'2',
+            '3':'3',
+        }
+
+    elif kind == 'misses':
+        lookup = {
+            '0':'No',
+            '1':'Yes'
+        }
+    
+    return [lookup[v] if v in lookup else 'None' for v in vals]
+

@@ -1,22 +1,22 @@
-
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
+name = "pypi"
 
 [packages]
+Flask = "==1.1.2"
 pandas = "*"
-flask = "*"
 xlrd = "*"
 whitenoise = "*"
 gunicorn = "*"
 itsdangerous = "*"
 click = "*"
-jinja2 = "*"
+"jinja2" = "*"
 markupsafe = "*"
 werkzeug = "*"
+"psycopg2-binary" = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3.8"
