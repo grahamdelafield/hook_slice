@@ -89,7 +89,7 @@
       `</div>
       </div>
       <div class="contianer" id="shot-container">
-        <div class="form-group row" id="shot-counter-1" name="running-counter">
+        <div class="form-group row d-flex justify-content-between" id="shot-counter-1" name="running-counter">
             <label for="staticEmail" class="col-sm-1 col-form-label">Shot 1</label>
                 <div class="col-sm-2">
                 <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
@@ -138,12 +138,12 @@
         </div>
         <button class="btn btn-primary float-right" onclick=submitData()>Submit</button>
     </form>
-    <button type="add" class="btn btn-secondary" onclick=testAdd()>+Add Shot</button>
+    <button type="add" class="btn btn-secondary" onclick=addShot()>+Add Shot</button>
 </div>
 <div class="container" style="padding-top: 3rem;">
 </div>
-<template id="productrow">
-    <div class="form-group row" id="shot-counter-1" name="running-counter">
+<template id="shotrow">
+    <div class="form-group row d-flex justify-content-between" id="shot-counter-1" name="running-counter">
     <label for="staticEmail" class="col-sm-1 col-form-label" id="shot-label">Shot 1</label>
                 <div class="col-sm-2">
                 <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">

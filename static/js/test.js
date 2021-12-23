@@ -3,13 +3,13 @@ window.onload = function() {
     return
 }
 
-function testAdd() {
+function addShot() {
     let container = document.getElementById('shot-container');
 
     let len = container.childElementCount + 1
     console.log(len);
     
-    let template = document.querySelector('#productrow');
+    let template = document.querySelector('#shotrow');
     var clone = template.content.cloneNode(true);
 
     let shotCounter = clone.querySelector("#shot-label");
@@ -60,81 +60,26 @@ async function recordData() {
     return results;
 }
 
-async function setData(dataDict) {
-    let clubSelections = document.getElementsByName("club-selection");
-    let flightPaths = document.getElementsByName("flight-path");
-    let shotScale = document.getElementsByName("shot-scale");
-    let mishits = document.getElementsByName("mishit-selection");
+// async function setData(dataDict) {
+//     let clubSelections = document.getElementsByName("club-selection");
+//     let flightPaths = document.getElementsByName("flight-path");
+//     let shotScale = document.getElementsByName("shot-scale");
+//     let mishits = document.getElementsByName("mishit-selection");
 
-    let clubs = dataDict['clubs'];
-    let paths = dataDict['paths'];
-    let scales = dataDict['scales'];
-    let misses = dataDict['misses'];
+//     let clubs = dataDict['clubs'];
+//     let paths = dataDict['paths'];
+//     let scales = dataDict['scales'];
+//     let misses = dataDict['misses'];
 
-    for (i=0; i<clubSelections.length-1; i++) {
-        clubSelections[i].value = clubs[i];
-        flightPaths[i].value = paths[i];
-        shotScale[i].value = scales[i];
-        mishits[i].value = misses[i];
+//     for (i=0; i<clubSelections.length-1; i++) {
+//         clubSelections[i].value = clubs[i];
+//         flightPaths[i].value = paths[i];
+//         shotScale[i].value = scales[i];
+//         mishits[i].value = misses[i];
 
-    }
-    return
-}
-
-async function addShot() {
-    let currentData = await recordData();
-    var shotContainer = document.getElementById("shot-container");
-    var currentShot = document.getElementsByName("running-counter");
-    currentShot = currentShot.length + 1;
-    shotContainer.innerHTML += "<div class='form-group row' id='shot-counter' name='running-counter'>" +
-          "<label for='staticEmail' class='col-sm-1 col-form-label'>Shot " + currentShot + "</label>" +
-            "<div class='col-sm-2'>" +
-              "<select class='form-select' aria-label='Default select example' id='shot-"+ currentShot+"-club' name='club-selection'>" +
-                    "<option selected>Club</option>" +
-                    "<option value='13'>Driver</option>" +
-                    "<option value='14'>3 Wood</option>" +
-                    "<option value='15'>5 Wood</option>" +
-                    "<option value='1'>Hybrid</option>" +
-                    "<option value='2'>2 Iron</option>" +
-                    "<option value='3'>3 Iron</option>" +
-                    "<option value='4'>4 Iron</option>" +
-                    "<option value='5'>5 Iron</option>" +
-                    "<option value='6'>6 Iron</option>" +
-                    "<option value='7'>7 Iron</option>" +
-                    "<option value='8'>8 Iron</option>" +
-                    "<option value='9'>9 Iron</option>" +
-                    "<option value='10'>Pitching Wedge</option>" +
-                    "<option value='11'>Sand Wedge</option>" +
-                "</select>" +
-            "</div>" +
-            "<div class='col-sm-2'>" +
-                "<select class='form-select' aria-label='Default select example' id='shot-"+ currentShot+"-direction' name='flight-path'>" +
-                      "<option selected>Left/Right</option>" +
-                      "<option value='1'>Left</option>" +
-                      "<option value='2'>Straight</option>" +
-                      "<option value='3'>Right</option>" +
-                  "</select>" +
-            "</div>" +
-            "<div class='col-sm-2'>" +
-                "<select class='form-select' aria-label='Default select example' id='shot-"+ currentShot+"-scale' name='shot-scale'>" +
-                      "<option selected>Scale</option>" +
-                      "<option value='0'>0</option>" +
-                      "<option value='1'>+1</option>" +
-                      "<option value='2'>+2</option>" +
-                      "<option value='3'>+3</option>" +
-                  "</select>" +
-            "</div>" +
-            "<div class='col-sm-2'>" +
-                "<select class='form-select' aria-label='Default select example' id='shot-1-mishit' name='mishit-selection'>" +
-                    "<option selected>Mishit?</option>" +
-                    "<option value='0'>No</option>" +
-                    "<option value='1'>Yes</option>" +
-                "</select>" +
-            "</div>" +
-        "</div>"
-    await setData(currentData);
-    return false;
-}
+//     }
+//     return
+// }
 
 async function submitData() {
     let currentData = await recordData();
@@ -144,7 +89,7 @@ async function submitData() {
 
     if (firstName == "" || lastName == ""){
         window.alert('No valid name...dipshit.');
-        return
+        return false;
     }
 
     
@@ -154,20 +99,22 @@ async function submitData() {
     
     if (month == 'Choose...' || day == 'Choose...' || year == 'Choose...'){
         window.alert("You didn't enter a date.")
-        return
+        return false;
     }
 
-    var data = new Object();
+    return true;
 
-    data['name'] = firstName + " " + lastName;
-    data['date'] = year + '-' + month + '-' + day;
+    // var data = new Object();
 
-    data['clubs'] = currentData['clubs'];
-    data['flight paths'] = currentData['paths'];
-    data['shot scale'] = currentData['scales'];
-    data['mishits'] = currentData['misses'];
+    // data['name'] = firstName + " " + lastName;
+    // data['date'] = year + '-' + month + '-' + day;
 
-    console.log(data);
+    // data['clubs'] = currentData['clubs'];
+    // data['flight paths'] = currentData['paths'];
+    // data['shot scale'] = currentData['scales'];
+    // data['mishits'] = currentData['misses'];
+
+    // console.log(data);
 
 }
 
