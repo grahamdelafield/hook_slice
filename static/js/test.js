@@ -12,6 +12,9 @@ function addShot() {
     let template = document.querySelector('#shotrow');
     var clone = template.content.cloneNode(true);
 
+    let holeLabel = clone.querySelector("#hole-number");
+    holeLabel.innerHTML = 'Hole ' + String(len);
+
     let shotCounter = clone.querySelector("#shot-label");
     shotCounter.innerHTML = 'Shot ' + String(len);
     

@@ -6,14 +6,18 @@
 <div class="container">
     <form method="POST">
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="inputName2">First Name</label>
               <input type="name" class="form-control" id="inputName2" name='first-name' placeholder="Watson">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="inputName4">Last Name</label>
               <input type="name" class="form-control" id="inputName4" name="last-name" placeholder="Crick">
             </div>
+            <div class="form-group col-md-4">
+                <label for="inputName4">Course</label>
+                <input type="name" class="form-control" id="inputName4" name="course-name" placeholder="St. Andrews">
+              </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
@@ -91,6 +95,29 @@
       <div class="contianer" id="shot-container">
         <div class="form-group row d-flex justify-content-between" id="shot-counter-1" name="running-counter">
             <label for="staticEmail" class="col-sm-1 col-form-label">Shot 1</label>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="hole-number" name="hole-selection">
+                    <option selected>Hole</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    </select>
+                </div>
                 <div class="col-sm-2">
                 <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
                         <option selected>Club</option>
@@ -145,6 +172,29 @@
 <template id="shotrow">
     <div class="form-group row d-flex justify-content-between" id="shot-counter-1" name="running-counter">
     <label for="staticEmail" class="col-sm-1 col-form-label" id="shot-label">Shot 1</label>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="hole-number" name="hole-selection">
+                    <option selected>Hole</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    </select>
+                </div>
                 <div class="col-sm-2">
                 <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
                         <option selected>Club</option>

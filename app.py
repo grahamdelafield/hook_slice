@@ -11,7 +11,7 @@ connection = psycopg2.connect(POSTGRES_URI)
 with connection:
     with connection.cursor() as cursor:
         try:
-            cursor.execute("CREATE TABLE data (name TEXT, date TEXT, club TEXT, flight_path TEXT, scale TEXT, misshit TEXT)")
+            cursor.execute("CREATE TABLE data (name TEXT, course TEXT, date TEXT, hole TEXT, club TEXT, flight_path TEXT, scale TEXT, misshit TEXT)")
         except:
             print('TABLE data has already been constructed. Moving on...')
             pass
@@ -37,7 +37,7 @@ def track():
                 with connection:
                     with connection.cursor() as cursor:
                         for r in resp:
-                            cursor.execute("INSERT INTO data VALUES (%s, %s, %s, %s, %s, %s);", r)
+                            cursor.execute("INSERT INTO data VALUES (%s, %s, %s, %s, %s, %s, %s, %s);", r)
                 time.sleep(1)
                 return render_template('success.html')
             else:
@@ -62,9 +62,14 @@ def handle_data(form):
     first_name = form.get('first-name')
     last_name = form.get('last-name')
 
+    course_name = form.get('course-name')
+
     year = request.form.get('year-selector')
     month = request.form.get('month-selector')
     day = request.form.get('day-selector')
+
+    holes = [v for (k, v) in form.items() if k.startswith('hole')]
+    holes = map_values(holes, 'holes')
 
     clubs = [v for (k, v) in form.items() if k.startswith('club')]
     clubs = map_values(clubs, 'clubs')
@@ -79,11 +84,35 @@ def handle_data(form):
     misses = map_values(misses, 'misses')
 
     user_name = [first_name + ' ' + last_name]*len(clubs)
+    courses = [course_name]*len(clubs)
     date = [year + '-' + month + '-' + day]*len(clubs)
 
-    return zip(user_name, date, clubs, paths, scales, misses)
+    return zip(user_name, courses, date, holes, clubs, paths, scales, misses)
 
 def map_values(vals, kind):
+
+    if kind == 'holes':
+        lookup = {
+            '1':'1',
+            '2':'2',
+            '3':'3',
+            '4':'4',
+            '5':'5',
+            '6':'6',
+            '7':'7',
+            '8':'8',
+            '9':'9',
+            '10':'10',
+            '11':'11',
+            '12':'12',
+            '12':'12',
+            '13':'13',
+            '14':'14',
+            '15':'15',
+            '16':'16',
+            '17':'17',
+            '18':'18'
+        }
 
     if kind == 'clubs':
         lookup = {
