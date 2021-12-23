@@ -129,7 +129,8 @@ def map_values(vals, kind):
             "8":"8 Iron",
             "9":"9 Iron",
             "10":"Pitching Wedge",
-            "11":"Sand Wedge"
+            "11":"Sand Wedge",
+            "16":"Putter"
         }
 
     elif kind == 'paths':
