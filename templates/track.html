@@ -172,75 +172,75 @@
 </div>
 <template id="shotrow">
     <div class="form-group row d-flex justify-content-between" id="shot-counter-1" name="running-counter">
-    <label for="staticEmail" class="col-sm-1 col-form-label" id="shot-label">Shot 1</label>
+        <label for="staticEmail" class="col-sm-1 col-form-label" id='shot-label'>Shot 1</label>
+        <div class="col-sm-2">
+            <select class="form-select" aria-label="Default select example" id="hole-number" name="hole-selection">
+                <option selected>Hole</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                </select>
+            </div>
             <div class="col-sm-2">
-                <select class="form-select" aria-label="Default select example" id="hole-number" name="hole-selection">
-                    <option selected>Hole</option>
+            <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
+                    <option selected>Club</option>
+                    <option value="13">Driver</option>
+                    <option value="14">3 Wood</option>
+                    <option value="15">5 Wood</option>
+                    <option value="1">Hybrid</option>
+                    <option value="2">2 Iron</option>
+                    <option value="3">3 Iron</option>
+                    <option value="4">4 Iron</option>
+                    <option value="5">5 Iron</option>
+                    <option value="6">6 Iron</option>
+                    <option value="7">7 Iron</option>
+                    <option value="8">8 Iron</option>
+                    <option value="9">9 Iron</option>
+                    <option value="10">Pitching Wedge</option>
+                    <option value="11">Sand Wedge</option>
+                    <option value="16">Putter</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="shot-direction" name="flight-path">
+                    <option selected>Left/Right</option>
+                    <option value="1">Left</option>
+                    <option value="2">Straight</option>
+                    <option value="3">Right</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="shot-scale" name="shot-scale">
+                    <option selected>Scale</option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                <select class="form-select" aria-label="Default select example" id="shot-club" name="club-selection">
-                        <option selected>Club</option>
-                        <option value="13">Driver</option>
-                        <option value="14">3 Wood</option>
-                        <option value="15">5 Wood</option>
-                        <option value="1">Hybrid</option>
-                        <option value="2">2 Iron</option>
-                        <option value="3">3 Iron</option>
-                        <option value="4">4 Iron</option>
-                        <option value="5">5 Iron</option>
-                        <option value="6">6 Iron</option>
-                        <option value="7">7 Iron</option>
-                        <option value="8">8 Iron</option>
-                        <option value="9">9 Iron</option>
-                        <option value="10">Pitching Wedge</option>
-                        <option value="11">Sand Wedge</option>
-                        <option value="16">Putter</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example" id="shot-direction" name="flight-path">
-                        <option selected>Left/Right</option>
-                        <option value="1">Left</option>
-                        <option value="2">Straight</option>
-                        <option value="3">Right</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example" id="shot-scale" name="shot-scale">
-                        <option selected>Scale</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example" id="shot-mishit" name="shot-misshit">
-                        <option selected>Mishit?</option>
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                </div>
+                </select>
             </div>
+            <div class="col-sm-2">
+                <select class="form-select" aria-label="Default select example" id="shot-misshit" name="shot-misshit">
+                    <option selected>Mishit?</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+        </div>
   </template>
 
 {% endblock %}

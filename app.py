@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, Response, make_response
+from pandas import DataFrame
 import json
 import time
 import psycopg2
@@ -41,13 +42,14 @@ def track():
                 time.sleep(1)
                 return render_template('success.html')
             else:
+                # user not complete
                 return ('', 204)
-
         else:
-            
+            # user data not complete
             return ('', 204)
         
     else:   
+        # serve first GET request
         return render_template('track.html')
     
 
@@ -57,8 +59,38 @@ def form_example():
     # handle the POST request
     return render_template('analyze.html')
 
+@app.route('/download', methods=['GET', 'POST'])
+def get_data():
+
+    db_map = get_db_unique('name')
+    database_names = list(db_map.items())
+
+
+    if request.method == 'POST':
+        if request.form.get('player-name') == 'Player Name':
+            return ('', 204)
+        else:
+            print('SHOULD SEND DATA')
+            chosen_name = request.form.get('player-name')
+            chosen_name = db_map[int(chosen_name)]
+            with connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(f"SELECT * from data WHERE name = '{chosen_name}'")
+                    player_data = cursor.fetchall()
+            
+            data = DataFrame(player_data, columns=['Name', 'Course', 'Date', 'Hole', 'Club', 'Flight Path', 'Scale', 'Misshit'])
+            
+            resp = make_response(data.to_csv(index=False))
+            resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
+            resp.headers["Content-Type"] = "text/csv"
+
+            return resp
+
+    else:
+        return render_template('download.html', names=database_names)
+
 def handle_data(form):
-    print('here')
+    print(form.items())
     first_name = form.get('first-name')
     last_name = form.get('last-name')
 
@@ -86,6 +118,9 @@ def handle_data(form):
     user_name = [first_name + ' ' + last_name]*len(clubs)
     courses = [course_name]*len(clubs)
     date = [year + '-' + month + '-' + day]*len(clubs)
+
+    for i, item in enumerate([user_name, courses, date, holes, clubs, paths, scales, misses]):
+        print(i, len(item))
 
     return zip(user_name, courses, date, holes, clubs, paths, scales, misses)
 
@@ -156,3 +191,13 @@ def map_values(vals, kind):
     
     return [lookup[v] if v in lookup else 'None' for v in vals]
 
+def get_db_unique(column):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"SELECT DISTINCT {column} from data")
+            data = cursor.fetchall()
+
+    data = sorted([i[0] for i in data])
+    idx = range(len(data))
+    data = dict(zip(idx, data))
+    return data

@@ -13,7 +13,7 @@ function addShot() {
     var clone = template.content.cloneNode(true);
 
     let holeLabel = clone.querySelector("#hole-number");
-    holeLabel.innerHTML = 'Hole ' + String(len);
+    holeLabel.name = 'hole-' + String(len);
 
     let shotCounter = clone.querySelector("#shot-label");
     shotCounter.innerHTML = 'Shot ' + String(len);
@@ -27,7 +27,7 @@ function addShot() {
     let shotScale = clone.querySelector("#shot-scale");
     shotScale.name = "shot-scale-" + String(len);
 
-    let shotMiss = clone.querySelector("#shot-mishit");
+    let shotMiss = clone.querySelector("#shot-misshit");
     shotMiss.name = "shot-misshit-" + String(len);
     
     container.appendChild(clone);

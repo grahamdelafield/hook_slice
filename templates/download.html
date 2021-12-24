@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container" style="padding-top: 3rem;">
+    <div class="container">
+        <h1>Download your data here!</h1>
+        <div class="col-sm-6">
+            <form method="POST">
+                <select class="form-select" aria-label="Default select example" id="hole-number" name="player-name">
+                    <option selected>Player Name</option>
+                    {% for name in names %}
+                        <option value={{name[0]}}>{{name[1]}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-primary float-left" style="margin-top: 1rem;">Download</button>
+            </form>
+    </div>
+</section>
+{% endblock %}
