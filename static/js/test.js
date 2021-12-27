@@ -63,27 +63,6 @@ async function recordData() {
     return results;
 }
 
-// async function setData(dataDict) {
-//     let clubSelections = document.getElementsByName("club-selection");
-//     let flightPaths = document.getElementsByName("flight-path");
-//     let shotScale = document.getElementsByName("shot-scale");
-//     let mishits = document.getElementsByName("mishit-selection");
-
-//     let clubs = dataDict['clubs'];
-//     let paths = dataDict['paths'];
-//     let scales = dataDict['scales'];
-//     let misses = dataDict['misses'];
-
-//     for (i=0; i<clubSelections.length-1; i++) {
-//         clubSelections[i].value = clubs[i];
-//         flightPaths[i].value = paths[i];
-//         shotScale[i].value = scales[i];
-//         mishits[i].value = misses[i];
-
-//     }
-//     return
-// }
-
 async function submitData() {
     let currentData = await recordData();
 
@@ -106,19 +85,21 @@ async function submitData() {
     }
 
     return true;
-
-    // var data = new Object();
-
-    // data['name'] = firstName + " " + lastName;
-    // data['date'] = year + '-' + month + '-' + day;
-
-    // data['clubs'] = currentData['clubs'];
-    // data['flight paths'] = currentData['paths'];
-    // data['shot scale'] = currentData['scales'];
-    // data['mishits'] = currentData['misses'];
-
-    // console.log(data);
-
 }
 
+function checkAnalyze() {
+    let chosenName = document.getElementById('player-name');
+    let selector = document.getElementById('metric-selector');
+    let oragnizer = document.getElementById('metric-organizer');
+    console.log(chosenName.options[chosenName.selectedIndex].text);
+    let params = [chosenName, selector, oragnizer];
 
+    for (i = 0; i < 3; i++) {
+        if (params[i].options[params[i].selectedIndex].text == 'Choose...') {
+            window.alert('One or more parameters not set!');
+            return false;
+        }
+    }
+    
+    return true;
+}

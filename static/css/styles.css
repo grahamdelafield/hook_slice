@@ -16,3 +16,8 @@
 .nav-item {
     margin-right: 20px;
 }
+.label-text{
+    padding-top: 1rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+}

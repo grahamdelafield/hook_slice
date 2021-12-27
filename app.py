@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, Response, make_response
 from pandas import DataFrame
-import json
+from datetime import datetime
+import altair as alt
 import time
 import psycopg2
 
@@ -56,8 +57,24 @@ def track():
 # @app.route('/analyze')
 @app.route('/analyze', methods=['GET', 'POST'])
 def form_example():
-    # handle the POST request
-    return render_template('analyze.html')
+    db_map = get_db_unique('name')
+    database_names = list(db_map.items())
+
+    if request.method == 'POST':
+        player_name = request.form.get('player-name')
+        metric_select = request.form.get('metric')
+        metric_organizer = request.form.get('facet')
+        for item in [player_name, metric_organizer, metric_select]:
+            if item == 'Choose...':
+                return ('', 204)
+            else:
+                query = custom_query(name=db_map[int(player_name)])
+                data = get_custom_data(query)
+                chart = make_chart(data, metric_select, metric_organizer).to_html()
+                return render_template('analyze.html', names=database_names, plot=chart)
+        return ('', 204)
+    else:
+        return render_template('analyze.html', names=database_names)
 
 @app.route('/download', methods=['GET', 'POST'])
 def get_data():
@@ -201,3 +218,59 @@ def get_db_unique(column):
     idx = range(len(data))
     data = dict(zip(idx, data))
     return data
+
+def custom_query(name=None, course=None, club=None):
+    
+    where = []
+
+    if name is not None:
+        where.append(f"name = '{name}'")
+    if course is not None:
+        where.append(f"course = '{course}'")
+    if club is not None:
+        where.append(f"club = '{club}'")
+
+    if where != []:
+        where = ['WHERE ' + where[0]] + where[1:]
+        where = ' AND '.join(where)
+
+    qry = 'SELECT * FROM data ' + where 
+    return qry
+
+def get_custom_data(query):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            data = cursor.fetchall()
+
+    data = DataFrame(data, columns=['name', 'course', 'date', 'hole', 'club', 'flight_path', 'scale', 'misshit'])
+    data.loc[:, 'date'] = data.date.map(lambda x: datetime.strptime(x, '%Y-%m-%d'))
+    data.loc[:, 'hole'] = data.hole.astype(int)
+
+    return data
+    
+def make_chart(dataframe, metric, facet):
+
+    dataframe = dataframe.sort_values(['date', 'hole', 'club'], ascending=[True, True, True])
+
+    if facet == 'club':
+        facet = alt.Facet('club:N', columns=4)
+    elif facet == 'hole':
+        facet = alt.Facet('hole:Q', sort=[str(i) for i in range(1, 19)], columns=6)
+    elif facet == 'course':
+        facet = alt.Facet('course:N')
+
+    if metric == 'strokes':
+        y=alt.Y('count()', title='Stroke Count')
+    elif metric == 'misshits':
+        y=alt.Y('count(misshits):Q', title='Number of Misshits')
+    elif metric == 'scale':
+        y=alt.Y('mean(scale):Q', title='Average')
+
+    chart = alt.Chart(dataframe).mark_bar().encode(
+        x=alt.X('date:T'),
+        y=y,
+        facet=facet
+    )
+
+    return chart
