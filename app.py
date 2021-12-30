@@ -244,7 +244,7 @@ def get_custom_data(query):
             data = cursor.fetchall()
 
     data = DataFrame(data, columns=['name', 'course', 'date', 'hole', 'club', 'flight_path', 'scale', 'misshit'])
-    data.loc[:, 'date'] = data.date.map(lambda x: datetime.strptime(x, '%Y-%m-%d'))
+    # data.loc[:, 'date'] = data.date.map(lambda x: datetime.strptime(x, '%Y-%m-%d'))
     data.loc[:, 'hole'] = data.hole.astype(int)
 
     return data
@@ -253,24 +253,49 @@ def make_chart(dataframe, metric, facet):
 
     dataframe = dataframe.sort_values(['date', 'hole', 'club'], ascending=[True, True, True])
 
+    tips = ['date:T']
+
     if facet == 'club':
-        facet = alt.Facet('club:N', columns=4)
+        facet = alt.Facet('club', sort=[
+            "Driver", "3 Wood", "5 Wood, Hybrid", "2 Iron",
+            "3 Iron", "4 Iron", "5 Iron", "6 Iron", "7 Iron",
+            "8 Iron", "9 Iron", "Pitching Wedge", "Sand Wedge",
+            "Putter"
+        ])
+        num_cols = 4
     elif facet == 'hole':
-        facet = alt.Facet('hole:Q', sort=[str(i) for i in range(1, 19)], columns=6)
+        facet = alt.Facet('hole:Q', sort=[str(i) for i in range(1, 19)])
+        num_cols = 6
     elif facet == 'course':
         facet = alt.Facet('course:N')
+        num_cols = len(dataframe.course.unique())
 
     if metric == 'strokes':
         y=alt.Y('count()', title='Stroke Count')
+        tips.append('count()')
     elif metric == 'misshits':
+        dataframe = dataframe[dataframe.misshit=='Yes']
         y=alt.Y('count(misshits):Q', title='Number of Misshits')
+        tips.append('count(misshits):Q')
     elif metric == 'scale':
-        y=alt.Y('mean(scale):Q', title='Average')
+        y=alt.Y('mean(scale):Q', title='Average Scale')
+        tips.append('mean(scale):Q')
 
-    chart = alt.Chart(dataframe).mark_bar().encode(
+
+    dots = alt.Chart(dataframe).mark_circle(size=50).encode(
         x=alt.X('date:T'),
         y=y,
-        facet=facet
-    )
+        tooltip=alt.Tooltip(tips)
+    ).properties(
+        width=100
+    ) 
 
-    return chart
+    lines = alt.Chart(dataframe).mark_line().encode(
+        x=alt.X('date:T'),
+        y=y,
+    ).properties(
+        width=100
+    ) 
+
+
+    return alt.layer(dots, lines).facet(facet, columns=num_cols)
