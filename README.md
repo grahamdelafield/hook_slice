@@ -1,4 +1,4 @@
-# Citrullination ETL
+# Hook Slice
 
 <img src="https://github.com/grahamdelafield/hook_slice/blob/main/images/tiger.png" align="right"
      alt="Sankey" height="250">
