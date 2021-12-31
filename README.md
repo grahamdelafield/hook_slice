@@ -3,7 +3,7 @@
 <img src="https://github.com/grahamdelafield/hook_slice/blob/main/images/tiger.png" align="right"
      alt="Sankey" height="250">
      
-Custom web application to record, retrieve, and analyze personal golf data. The application can be run natively by following the <a href="#getting-started">getting started</a> instructions below. The live version of the application can be viewed at <a href=https://www.hook-slice.herokuapp.com>www.hook-slice.herokuapp.com</a>.
+Custom web application to record, retrieve, and analyze personal golf data. The application can be run natively by following the <a href="#getting-started">getting started</a> instructions below. The live version of the application can be viewed at <a href=https://hook-slice.herokuapp.com/>www.hook-slice.herokuapp.com</a>.
 
 ## Built With
 * [Python](https://python.org)
