@@ -1,6 +1,6 @@
 # Citrullination ETL
 
-<img src="https://github.com/grahamdelafield/hook-slice/blob/main/images/tiger.png" align="right"
+<img src="https://github.com/grahamdelafield/hook_slice/blob/main/images/tiger.png" align="right"
      alt="Sankey" height="250">
      
 Custom web application to record, retrieve, and analyze personal golf data.
